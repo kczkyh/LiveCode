@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.qhit.codeTables.dao.ICodeTablesDao"> 
+	<!-- 自定义结果集 --> 
+	<resultMap id="BaseResultMap" type="com.qhit.codeTables.pojo.CodeTables"> 
+		<id property="cid" column="cid" javaType="java.lang.Integer"></id> 
+		<result property="cname" column="cname" javaType="java.lang.String"></result> 
+		<result property="count" column="count" javaType="java.lang.Integer"></result> 
+		<result property="type" column="type" javaType="java.lang.Integer"></result> 
+		<result property="logo" column="logo" javaType="java.lang.String"></result>
+		<result property="spare" column="spare" javaType="java.lang.String"></result>
+		<result property="eid" column="eid" javaType="java.lang.String"></result>
+		<result property="secret" column="secret" javaType="java.lang.String"></result>
+		<result property="cover" column="cover" javaType="java.lang.String"></result>
+		<result property="creattime" column="creattime" javaType="java.lang.String"></result>
+		<result property="start" column="start" javaType="java.lang.Integer"></result> 
+	</resultMap> 
+
+	<!-- 在各种标签中，id属性必须与接口中的方法名一样，id的值必须是唯一的，parameterType指查询时使用的参数类型， 
+	resultType属性指明查询返回的结果集类型    --> 
+ 
+	<sql id="Base_Column_List" > 
+		cid,cname,count,eid,type,logo,spare,creattime,start,eid,secret,cover
+	</sql> 
+	<select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer" > 
+		select 
+		<include refid="Base_Column_List" /> 
+		from code_tables 
+		where cid = #{cid} 
+	</select> 
+	<delete id="delete" parameterType="java.lang.Integer" > 
+		delete from code_tables 
+		where cid = #{cid} 
+	</delete> 
+	<insert id="insert" parameterType="com.qhit.codeTables.pojo.CodeTables" > 
+		insert into code_tables(cname,count,eid,type,logo,spare,creattime,start) 
+		values (#{cname},#{count},#{eid},#{type},#{logo},#{spare},#{creattime},#{start}) 
+	</insert> 
+	<update id="updateSelective" parameterType="com.qhit.codeTables.pojo.CodeTables" > 
+		update code_tables 
+		<set > 
+			<if test="cname != null and cname!='' " > 
+				cname = #{cname}, 
+			</if> 
+			<if test="count != null and count!='' " > 
+				count = #{count}, 
+			</if> 
+			<if test="eid != null and eid!='' " > 
+				eid = #{eid}, 
+			</if> 
+			<if test="type != null and type!='' " > 
+				type = #{type}, 
+			</if> 
+			<if test="logo != null and logo!='' " > 
+				logo = #{logo}, 
+			</if> 
+			<if test="spare != null and spare!='' " > 
+				spare = #{spare}, 
+			</if> 
+			<if test="creattime != null and creattime!='' " > 
+				creattime = #{creattime}, 
+			</if> 
+			<if test="start != null and start!='' " > 
+				start = #{start}, 
+			</if>
+			<if test="cover != null and cover!='' " >
+				cover = #{cover},
+			</if>
+			<if test="secret != null and secret!='' " >
+				secret = #{secret},
+			</if>
+		</set> 
+		where cid = #{cid} 
+	</update> 
+	<update id="update" parameterType="com.qhit.codeTables.pojo.CodeTables" > 
+		update code_tables 
+		set  cname = #{cname}, count = #{count}, eid = #{eid}, type = #{type}, logo = #{logo},
+		spare = #{spare}, creattime = #{creattime}, start = #{start},cover=#{cover},secret=#{secret}
+		where cid = #{cid} 
+	</update> 
+	<select id="findAll" resultMap="BaseResultMap" > 
+		select 
+		<include refid="Base_Column_List" /> 
+		from code_tables 
+	</select> 
+	<select id="findByCname" resultMap="BaseResultMap" parameterType="java.lang.String" > 
+		select 
+		<include refid="Base_Column_List" /> 
+		from code_tables 
+		where cname = #{cname} 
+	</select> 
+	<select id="findByCount" resultMap="BaseResultMap" parameterType="java.lang.Integer" > 
+		select 
+		<include refid="Base_Column_List" /> 
+		from code_tables 
+		where count = #{count} 
+	</select> 
+	<select id="findByEid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		<include refid="Base_Column_List" /> 
+		from code_tables 
+		where eid = #{eid} 
+	</select> 
+	<select id="findByType" resultMap="BaseResultMap" parameterType="java.lang.Integer" > 
+		select 
+		<include refid="Base_Column_List" /> 
+		from code_tables 
+		where type = #{type} 
+	</select> 
+	<select id="findByLogo" resultMap="BaseResultMap" parameterType="java.lang.String" > 
+		select 
+		<include refid="Base_Column_List" /> 
+		from code_tables 
+		where logo = #{logo} 
+	</select> 
+	<select id="findBySpare" resultMap="BaseResultMap" parameterType="java.lang.String" > 
+		select 
+		<include refid="Base_Column_List" /> 
+		from code_tables 
+		where spare = #{spare} 
+	</select> 
+	<select id="findByCreattime" resultMap="BaseResultMap" parameterType="java.lang.String" > 
+		select 
+		<include refid="Base_Column_List" /> 
+		from code_tables 
+		where creattime = #{creattime} 
+	</select> 
+	<select id="findByStart" resultMap="BaseResultMap" parameterType="java.lang.Integer" > 
+		select 
+		<include refid="Base_Column_List" /> 
+		from code_tables 
+		where start = #{start} 
+	</select> 
+	<delete id="deleteBatch" parameterType="java.util.Arrays"> 
+		delete from code_tables where cid in 
+		<foreach collection="array" item="id" open="(" close=")" separator=","> 
+			#{id} 
+		</foreach> 
+	</delete> 
+	<select id="search" parameterType="com.qhit.codeTables.pojo.CodeTables" resultMap="BaseResultMap"> 
+		select * from  code_tables 
+		<where > 
+			<if test="cname != null and cname!='' " > 
+				 and cname = #{cname} 
+			</if> 
+			<if test="count != null and count!='' " > 
+				 and count = #{count} 
+			</if> 
+			<if test="eid != null and eid!='' " > 
+				 and eid = #{eid} 
+			</if> 
+			<if test="type != null and type!='' " > 
+				 and type = #{type} 
+			</if> 
+			<if test="logo != null and logo!='' " > 
+				 and logo = #{logo} 
+			</if> 
+			<if test="spare != null and spare!='' " > 
+				 and spare = #{spare} 
+			</if> 
+			<if test="creattime != null and creattime!='' " > 
+				 and creattime = #{creattime} 
+			</if> 
+			<if test="start != null and start!='' " > 
+				 and start = #{start} 
+			</if>
+			<if test="start != null and secret!='' " >
+				and secret = #{secret}
+			</if>
+			<if test="cover != null and cover!='' " >
+				and cover = #{start}
+			</if>
+		</where> 
+	</select> 
+</mapper> 

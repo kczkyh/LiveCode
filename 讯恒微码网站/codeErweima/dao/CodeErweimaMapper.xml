@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.qhit.codeErweima.dao.ICodeErweimaDao"> 
+	<!-- 自定义结果集 --> 
+	<resultMap id="BaseResultMap" type="com.qhit.codeErweima.pojo.CodeErweima"> 
+		<id property="eid" column="eid" javaType="java.lang.Integer"></id> 
+		<result property="cid" column="cid" javaType="java.lang.Integer"></result> 
+		<result property="url" column="url" javaType="java.lang.String"></result> 
+		<result property="count" column="count" javaType="java.lang.Integer"></result> 
+		<result property="lasttime" column="lasttime" javaType="java.lang.String"></result> 
+		<result property="sort" column="sort" javaType="java.lang.Integer"></result> 
+		<result property="start" column="start" javaType="java.lang.Integer"></result> 
+	</resultMap> 
+
+	<!-- 在各种标签中，id属性必须与接口中的方法名一样，id的值必须是唯一的，parameterType指查询时使用的参数类型， 
+	resultType属性指明查询返回的结果集类型    --> 
+ 
+	<sql id="Base_Column_List" > 
+		eid,cid,url,count,lasttime,sort,start 
+	</sql> 
+	<select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer" > 
+		select 
+		<include refid="Base_Column_List" /> 
+		from code_erweima 
+		where eid = #{eid} 
+	</select> 
+	<delete id="delete" parameterType="java.lang.Integer" > 
+		delete from code_erweima 
+		where eid = #{eid} 
+	</delete> 
+	<insert id="insert" parameterType="com.qhit.codeErweima.pojo.CodeErweima" > 
+		insert into code_erweima(cid,url,count,lasttime,sort,start) 
+		values (#{cid},#{url},#{count},#{lasttime},#{sort},#{start}) 
+	</insert> 
+	<update id="updateSelective" parameterType="com.qhit.codeErweima.pojo.CodeErweima" > 
+		update code_erweima 
+		<set > 
+			<if test="cid != null and cid!='' " > 
+				cid = #{cid}, 
+			</if> 
+			<if test="url != null and url!='' " > 
+				url = #{url}, 
+			</if> 
+			<if test="count != null and count!='' " > 
+				count = #{count}, 
+			</if> 
+			<if test="lasttime != null and lasttime!='' " > 
+				lasttime = #{lasttime}, 
+			</if> 
+			<if test="sort != null and sort!='' " > 
+				sort = #{sort}, 
+			</if> 
+			<if test="start != null and start!='' " > 
+				start = #{start}, 
+			</if> 
+		</set> 
+		where eid = #{eid} 
+	</update> 
+	<update id="update" parameterType="com.qhit.codeErweima.pojo.CodeErweima" > 
+		update code_erweima 
+		set  cid = #{cid}, url = #{url}, count = #{count}, lasttime = #{lasttime}, sort = #{sort}, start = #{start} 
+		where eid = #{eid} 
+	</update> 
+	<select id="findAll" resultMap="BaseResultMap" > 
+		select 
+		<include refid="Base_Column_List" /> 
+		from code_erweima 
+	</select> 
+	<select id="findByCid" resultMap="BaseResultMap" parameterType="java.lang.Integer" > 
+		select 
+		<include refid="Base_Column_List" /> 
+		from code_erweima 
+		where cid = #{cid} 
+	</select> 
+	<select id="findByUrl" resultMap="BaseResultMap" parameterType="java.lang.String" > 
+		select 
+		<include refid="Base_Column_List" /> 
+		from code_erweima 
+		where url = #{url} 
+	</select> 
+	<select id="findByCount" resultMap="BaseResultMap" parameterType="java.lang.Integer" > 
+		select 
+		<include refid="Base_Column_List" /> 
+		from code_erweima 
+		where count = #{count} 
+	</select> 
+	<select id="findByLasttime" resultMap="BaseResultMap" parameterType="java.lang.String" > 
+		select 
+		<include refid="Base_Column_List" /> 
+		from code_erweima 
+		where lasttime = #{lasttime} 
+	</select> 
+	<select id="findBySort" resultMap="BaseResultMap" parameterType="java.lang.Integer" > 
+		select 
+		<include refid="Base_Column_List" /> 
+		from code_erweima 
+		where sort = #{sort} 
+	</select> 
+	<select id="findByStart" resultMap="BaseResultMap" parameterType="java.lang.Integer" > 
+		select 
+		<include refid="Base_Column_List" /> 
+		from code_erweima 
+		where start = #{start} 
+	</select> 
+	<delete id="deleteBatch" parameterType="java.util.Arrays"> 
+		delete from code_erweima where eid in 
+		<foreach collection="array" item="id" open="(" close=")" separator=","> 
+			#{id} 
+		</foreach> 
+	</delete> 
+	<select id="search" parameterType="com.qhit.codeErweima.pojo.CodeErweima" resultMap="BaseResultMap"> 
+		select * from  code_erweima 
+		<where > 
+			<if test="cid != null and cid!='' " > 
+				 and cid = #{cid} 
+			</if> 
+			<if test="url != null and url!='' " > 
+				 and url = #{url} 
+			</if> 
+			<if test="count != null and count!='' " > 
+				 and count = #{count} 
+			</if> 
+			<if test="lasttime != null and lasttime!='' " > 
+				 and lasttime = #{lasttime} 
+			</if> 
+			<if test="sort != null and sort!='' " > 
+				 and sort = #{sort} 
+			</if> 
+			<if test="start != null and start!='' " > 
+				 and start = #{start} 
+			</if> 
+		</where> 
+	</select> 
+</mapper> 
